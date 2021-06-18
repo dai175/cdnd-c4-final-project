@@ -4,6 +4,8 @@ service:
 plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
+  - serverless-reqvalidator-plugin
+  - serverless-aws-documentation
 
 provider:
   name: aws
@@ -17,6 +19,16 @@ provider:
     TODOS_TABLE: Todos-${self:provider.stage}
     IMAGES_S3_BUCKET: serverless-todo-images-dai175-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
+
+custom:
+  documentation:
+    models:
+      - name: CreateTodoRequest
+        contentType: application/json
+        schema: ${file(models/create-todo-request.json)}
+      - name: UpdateTodoRequest
+        contentType: application/json
+        schema: ${file(models/update-todo-request.json)}
 
 functions:
 
